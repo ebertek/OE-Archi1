@@ -1,0 +1,60 @@
+Microsoft (R) Macro Assembler  Version 4.00                 9/14/20 18:27:20
+
+                                                            Page     1-1
+                                                            
+
+       1                                 
+       2 0000                           Code	Segment 
+       3                                	assume CS:Code, DS:Data, SS:Stack 
+       4                                 
+       5 0000                           Start: 
+       6 0000  B8 ---- R                	mov	ax, Code 
+       7 0003  8E D8                    	mov	DS, AX 
+       8                                 
+       9                                 
+      10 0005                           Program_Vege: 
+      11 0005  B8 4C00                  	mov ax, 4c00h 
+      12 0008  CD 21                    	int 21h 
+      13                                 
+      14                                 
+      15                                 
+      16 000A                           Code	Ends 
+      17                                 
+      18 0000                           Data	Segment 
+      19                                 
+      20 0000                           Data	Ends 
+      21                                 
+      22 0000                           Stack	Segment 
+      23                                 
+      24 0000                           Stack	Ends 
+      25                                	End	Start 
+Microsoft (R) Macro Assembler  Version 4.00                 9/14/20 18:27:20
+
+                                                            Symbols-1
+                                                             
+
+Segments and Groups:
+
+                N a m e         	Size	Align	Combine Class
+
+CODE . . . . . . . . . . . . . .  	000A	PARA	NONE	
+DATA . . . . . . . . . . . . . .  	0000	PARA	NONE	
+STACK  . . . . . . . . . . . . .  	0000	PARA	NONE	
+
+Symbols:            
+
+                N a m e         	Type	Value	Attr         
+
+PROGRAM_VEGE . . . . . . . . . .  	L NEAR	0005	CODE
+
+START  . . . . . . . . . . . . .  	L NEAR	0000	CODE
+
+
+     25 Source  Lines
+     25 Total   Lines
+     26 Symbols
+
+  49958 Bytes symbol space free
+
+      0 Warning Errors
+      0 Severe  Errors
