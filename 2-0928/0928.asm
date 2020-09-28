@@ -41,12 +41,86 @@ Start:
   mov DX, OFFSET szoveg ; DS:DX-be cimet, DS-ben mar AX van, amiben meg a Code
   int 21h
   
+  mov AH,2
+  mov DL, 10
+  int 21h
+  mov DL, 13
+  int 21h
+
+  ; szammuveletek
+  mov AH,2
+  mov DL,'A'
+  inc DL ; 'B'
+  sub DL,2 ; '@'
+  add DL,3 ; 'C'
+  dec DL ; 'B'
+  int 21h
+
+  mov AH,2
+  mov DL, 10
+  int 21h
+  mov DL, 13
+  int 21h
+
+  ; ugralas, osszehasonlitas
+  mov AH,2
+  cmp AH,3 ; csak flageket (OSZPAC) allit
+  jz pEgyenlo ; jump if zero. a je (jump if equal) ugyanezt csinalja. a jnz pedig ugyanazt, amit a jne.
+
+  mov AH,9
+  mov DX, OFFSET negyenlo
+  int 21h
+  jmp Tovabb
+
+pEgyenlo:
+  mov AH,9
+  mov DX, OFFSET egyenlo
+  int 21h
+
+Tovabb:
+  mov AH,2
+  mov DL, 10
+  int 21h
+  mov DL, 13
+  int 21h
+
+  mov ah,2
+  cmp ah,1
+  jg pNagyobb
+  jl pKisebb
+
+  ; ha nem nagyobb es nem is kisebb, akkor egyenlo:
+  mov AH,9
+  mov DX, OFFSET egyenlo
+  int 21h
+
+pKisebb:
+  mov AH,9
+  mov DX, OFFSET kisebb
+  int 21h
+  jmp MegTovabb
+
+pNagyobb:
+  mov AH,9
+  mov DX, OFFSET nagyobb
+  int 21h
+
+MegTovabb:
+  mov AH,2
+  mov DL, 10
+  int 21h
+  mov DL, 13
+  int 21h
 
 Program_Vege:
 	mov ax, 4c00h
 	int 21h
 
 szoveg DB "Hello vilag megint!$" ; define byte, olyan adatstruktura, ami bajtokbol all
+egyenlo DB "Egyenlo!$"
+negyenlo DB "Nem egyenlo!$"
+nagyobb DB "Nagyobb$"
+kisebb DB "Kisebb$"
 
 Code	Ends
 
