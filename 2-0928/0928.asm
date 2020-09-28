@@ -14,7 +14,6 @@ Start:
   int 21h
   mov DL, 'l'
   int 21h
-  mov DL, 'l'
   int 21h
   mov DL, 'o'
   int 21h
