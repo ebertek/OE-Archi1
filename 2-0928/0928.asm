@@ -31,12 +31,22 @@ Start:
   int 21h
   mov DL, '!'
   int 21h
+  mov DL, 10
+  int 21h
+  mov DL, 13
+  int 21h
+  
+  ; hello world, egyben
+  mov AH,9 ; DOS Fn 09H:  DS:DX address of a string terminated with $
+  mov DX, OFFSET szoveg ; DS:DX-be cimet, DS-ben mar AX van, amiben meg a Code
+  int 21h
+  
 
 Program_Vege:
 	mov ax, 4c00h
 	int 21h
 
-
+szoveg DB "Hello vilag megint!$" ; define byte, olyan adatstruktura, ami bajtokbol all
 
 Code	Ends
 
