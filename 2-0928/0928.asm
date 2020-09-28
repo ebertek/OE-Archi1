@@ -10,37 +10,26 @@ Start:
   mov AH,2 ; DOS Fn 02H: Send the character in DL to stdout
   mov DL, 'H'
   int 21h
-  mov AH,2
   mov DL, 'e'
   int 21h
-  mov AH,2
   mov DL, 'l'
   int 21h
-  mov AH,2
   mov DL, 'l'
   int 21h
-  mov AH,2
   mov DL, 'o'
   int 21h
-  mov AH,2
   mov DL, ' '
   int 21h
-  mov AH,2
   mov DL, 'v'
   int 21h
-  mov AH,2
   mov DL, 'i'
   int 21h
-  mov AH,2
   mov DL, 'l'
   int 21h
-  mov AH,2
   mov DL, 'a'
   int 21h
-  mov AH,2
   mov DL, 'g'
   int 21h
-  mov AH,2
   mov DL, '!'
   int 21h
 
