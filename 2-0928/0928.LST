@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler  Version 4.00                 9/28/20 19:09:41
+Microsoft (R) Macro Assembler  Version 4.00                 9/28/20 19:22:20
 
                                                             Page     1-1
                                                             
@@ -41,15 +41,15 @@
       35 0037  CD 21                      int 21h 
       36 0039  B2 0D                      mov DL, 13 
       37 003B  CD 21                      int 21h 
-      38                                   
+      38                                 
       39                                  ; hello world, egyben 
       40 003D  B4 09                      mov AH,9 ; DOS Fn 09H:  DS:DX address
 					 of a string terminated with $ 
-      41 003F  BA 00BA R                  mov DX, OFFSET szoveg ; DS:DX-be cime
+      41 003F  BA 00C1 R                  mov DX, OFFSET szoveg ; DS:DX-be cime
 					t, DS-ben mar AX van, amiben meg a Code
 					 
       42 0042  CD 21                      int 21h 
-      43                                   
+      43                                 
       44 0044  B4 02                      mov AH,2 
       45 0046  B2 0A                      mov DL, 10 
       46 0048  CD 21                      int 21h 
@@ -57,7 +57,7 @@
       48 004C  CD 21                      int 21h 
       49                                 
       50                                  ; szammuveletek 
-Microsoft (R) Macro Assembler  Version 4.00                 9/28/20 19:09:41
+Microsoft (R) Macro Assembler  Version 4.00                 9/28/20 19:22:20
 
                                                             Page     1-2
                                                             
@@ -85,13 +85,13 @@
 					dig ugyanazt, amit a jne. 
       69                                 
       70 006F  B4 09                      mov AH,9 
-      71 0071  BA 00D7 R                  mov DX, OFFSET negyenlo 
+      71 0071  BA 00DE R                  mov DX, OFFSET negyenlo 
       72 0074  CD 21                      int 21h 
       73 0076  EB 08 90                   jmp Tovabb 
       74                                 
       75 0079                           pEgyenlo: 
       76 0079  B4 09                      mov AH,9 
-      77 007B  BA 00CE R                  mov DX, OFFSET egyenlo 
+      77 007B  BA 00D5 R                  mov DX, OFFSET egyenlo 
       78 007E  CD 21                      int 21h 
       79                                 
       80 0080                           Tovabb: 
@@ -109,61 +109,84 @@
       92                                  ; ha nem nagyobb es nem is kisebb, ak
 					kor egyenlo: 
       93 0093  B4 09                      mov AH,9 
-      94 0095  BA 00CE R                  mov DX, OFFSET egyenlo 
+      94 0095  BA 00D5 R                  mov DX, OFFSET egyenlo 
       95 0098  CD 21                      int 21h 
       96                                 
-      97 009A                           pKisebb: 
-      98 009A  B4 09                      mov AH,9 
-      99 009C  BA 00EC R                  mov DX, OFFSET kisebb 
-     100 009F  CD 21                      int 21h 
-Microsoft (R) Macro Assembler  Version 4.00                 9/28/20 19:09:41
+      97                                  ; a mov AH,9 / int 21h sorokat lehetn
+					e optimalizalni 
+      98                                 
+      99 009A                           pKisebb: 
+Microsoft (R) Macro Assembler  Version 4.00                 9/28/20 19:22:20
 
                                                             Page     1-3
                                                             
 
-     101 00A1  EB 08 90                   jmp MegTovabb 
-     102                                 
-     103 00A4                           pNagyobb: 
-     104 00A4  B4 09                      mov AH,9 
-     105 00A6  BA 00E4 R                  mov DX, OFFSET nagyobb 
-     106 00A9  CD 21                      int 21h 
-     107                                 
-     108 00AB                           MegTovabb: 
-     109 00AB  B4 02                      mov AH,2 
-     110 00AD  B2 0A                      mov DL, 10 
-     111 00AF  CD 21                      int 21h 
-     112 00B1  B2 0D                      mov DL, 13 
-     113 00B3  CD 21                      int 21h 
-     114                                 
-     115 00B5                           Program_Vege: 
-     116 00B5  B8 4C00                  	mov ax, 4c00h 
-     117 00B8  CD 21                    	int 21h 
-     118                                 
-     119 00BA  48 65 6C 6C 6F 20 76     szoveg DB "Hello vilag megint!$" ; defi
+     100 009A  B4 09                      mov AH,9 
+     101 009C  BA 00F3 R                  mov DX, OFFSET kisebb 
+     102 009F  CD 21                      int 21h 
+     103 00A1  EB 08 90                   jmp MegTovabb 
+     104                                 
+     105 00A4                           pNagyobb: 
+     106 00A4  B4 09                      mov AH,9 
+     107 00A6  BA 00EB R                  mov DX, OFFSET nagyobb 
+     108 00A9  CD 21                      int 21h 
+     109                                 
+     110 00AB                           MegTovabb: 
+     111 00AB  B4 02                      mov AH,2 
+     112 00AD  B2 0A                      mov DL, 10 
+     113 00AF  CD 21                      int 21h 
+     114 00B1  B2 0D                      mov DL, 13 
+     115 00B3  CD 21                      int 21h 
+     116                                 
+     117                                  ; bitwise muveletek: 
+     118                                  ; shl (x2), shr (/2), rol (ami az egy
+					ik oldalt kimegy, az a masikon bejon), 
+					ror 
+     119                                  ; and, or, xor -> ezek is bitenkenti 
+					muveletek, nem logikaiak 
+     120                                  ; not -> egy operandusu, invertalja a
+					 biteket 
+     121                                  ; neg -> kettes komplemenst kepez 
+     122                                 
+     123                                  ; regiszter kinullazasara modszerek: 
+     124 00B5  B8 0000                    mov ax,0 
+     125 00B8  2B C0                      sub ax,ax 
+     126 00BA  33 C0                      xor ax,ax ; ez talan a leggyorsabb 
+     127                                 
+     128 00BC                           Program_Vege: 
+     129 00BC  B8 4C00                  	mov ax, 4c00h 
+     130 00BF  CD 21                    	int 21h 
+     131                                 
+     132 00C1  48 65 6C 6C 6F 20 76     szoveg DB "Hello vilag megint!$" ; defi
 					ne byte, olyan adatstruktura, ami bajto
 					kbol all 
-     120       69 6C 61 67 20 6D 65     
-     121       67 69 6E 74 21 24        
-     122 00CE  45 67 79 65 6E 6C 6F     egyenlo DB "Egyenlo!$" 
-     123       21 24                    
-     124 00D7  4E 65 6D 20 65 67 79     negyenlo DB "Nem egyenlo!$" 
-     125       65 6E 6C 6F 21 24        
-     126 00E4  4E 61 67 79 6F 62 62     nagyobb DB "Nagyobb$" 
-     127       24                       
-     128 00EC  4B 69 73 65 62 62 24     kisebb DB "Kisebb$" 
-     129                                
-     130                                 
-     131 00F3                           Code	Ends 
-     132                                 
-     133 0000                           Data	Segment 
-     134                                 
-     135 0000                           Data	Ends 
-     136                                 
-     137 0000                           Stack	Segment 
-     138                                 
-     139 0000                           Stack	Ends 
-     140                                	End	Start 
-Microsoft (R) Macro Assembler  Version 4.00                 9/28/20 19:09:41
+     133       69 6C 61 67 20 6D 65     
+     134       67 69 6E 74 21 24        
+     135 00D5  45 67 79 65 6E 6C 6F     egyenlo DB "Egyenlo!$" 
+     136       21 24                    
+     137 00DE  4E 65 6D 20 65 67 79     negyenlo DB "Nem egyenlo!$" 
+     138       65 6E 6C 6F 21 24        
+     139 00EB  4E 61 67 79 6F 62 62     nagyobb DB "Nagyobb$" 
+     140       24                       
+     141 00F3  4B 69 73 65 62 62 24     kisebb DB "Kisebb$" 
+     142                                
+     143                                 
+     144 00FA                           Code	Ends 
+     145                                 
+     146 0000                           Data	Segment 
+     147                                 
+Microsoft (R) Macro Assembler  Version 4.00                 9/28/20 19:22:20
+
+                                                            Page     1-4
+                                                            
+
+     148 0000                           Data	Ends 
+     149                                 
+     150 0000                           Stack	Segment 
+     151                                 
+     152 0000                           Stack	Ends 
+     153                                	End	Start 
+Microsoft (R) Macro Assembler  Version 4.00                 9/28/20 19:22:20
 
                                                             Symbols-1
                                                              
@@ -172,7 +195,7 @@ Segments and Groups:
 
                 N a m e         	Size	Align	Combine Class
 
-CODE . . . . . . . . . . . . . .  	00F3	PARA	NONE	
+CODE . . . . . . . . . . . . . .  	00FA	PARA	NONE	
 DATA . . . . . . . . . . . . . .  	0000	PARA	NONE	
 STACK  . . . . . . . . . . . . .  	0000	PARA	NONE	
 
@@ -180,28 +203,28 @@ Symbols:
 
                 N a m e         	Type	Value	Attr         
 
-EGYENLO  . . . . . . . . . . . .  	L BYTE 	00CE	CODE
+EGYENLO  . . . . . . . . . . . .  	L BYTE 	00D5	CODE
 
-KISEBB . . . . . . . . . . . . .  	L BYTE 	00EC	CODE
+KISEBB . . . . . . . . . . . . .  	L BYTE 	00F3	CODE
 
 MEGTOVABB  . . . . . . . . . . .  	L NEAR	00AB	CODE
 
-NAGYOBB  . . . . . . . . . . . .  	L BYTE 	00E4	CODE
-NEGYENLO . . . . . . . . . . . .  	L BYTE 	00D7	CODE
+NAGYOBB  . . . . . . . . . . . .  	L BYTE 	00EB	CODE
+NEGYENLO . . . . . . . . . . . .  	L BYTE 	00DE	CODE
 
 PEGYENLO . . . . . . . . . . . .  	L NEAR	0079	CODE
 PKISEBB  . . . . . . . . . . . .  	L NEAR	009A	CODE
 PNAGYOBB . . . . . . . . . . . .  	L NEAR	00A4	CODE
-PROGRAM_VEGE . . . . . . . . . .  	L NEAR	00B5	CODE
+PROGRAM_VEGE . . . . . . . . . .  	L NEAR	00BC	CODE
 
 START  . . . . . . . . . . . . .  	L NEAR	0000	CODE
-SZOVEG . . . . . . . . . . . . .  	L BYTE 	00BA	CODE
+SZOVEG . . . . . . . . . . . . .  	L BYTE 	00C1	CODE
 
 TOVABB . . . . . . . . . . . . .  	L NEAR	0080	CODE
 
 
-    134 Source  Lines
-    134 Total   Lines
+    147 Source  Lines
+    147 Total   Lines
      36 Symbols
 
   48920 Bytes symbol space free

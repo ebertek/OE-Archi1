@@ -35,12 +35,12 @@ Start:
   int 21h
   mov DL, 13
   int 21h
-  
+
   ; hello world, egyben
   mov AH,9 ; DOS Fn 09H:  DS:DX address of a string terminated with $
   mov DX, OFFSET szoveg ; DS:DX-be cimet, DS-ben mar AX van, amiben meg a Code
   int 21h
-  
+
   mov AH,2
   mov DL, 10
   int 21h
@@ -94,6 +94,8 @@ Tovabb:
   mov DX, OFFSET egyenlo
   int 21h
 
+  ; a mov AH,9 / int 21h sorokat lehetne optimalizalni
+
 pKisebb:
   mov AH,9
   mov DX, OFFSET kisebb
@@ -111,6 +113,17 @@ MegTovabb:
   int 21h
   mov DL, 13
   int 21h
+
+  ; bitwise muveletek:
+  ; shl (x2), shr (/2), rol (ami az egyik oldalt kimegy, az a masikon bejon), ror
+  ; and, or, xor -> ezek is bitenkenti muveletek, nem logikaiak
+  ; not -> egy operandusu, invertalja a biteket
+  ; neg -> kettes komplemenst kepez
+
+  ; regiszter kinullazasara modszerek:
+  mov ax,0
+  sub ax,ax
+  xor ax,ax ; ez talan a leggyorsabb
 
 Program_Vege:
 	mov ax, 4c00h
