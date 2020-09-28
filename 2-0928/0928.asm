@@ -49,7 +49,7 @@ Start:
 
   ; szammuveletek
   mov AH,2
-  mov DL,'A'
+  mov DL,'A' ; lehetne 65, 41h vagy 01000001b is itt, ugyanaz lesz
   inc DL ; 'B'
   sub DL,2 ; '@'
   add DL,3 ; 'C'
