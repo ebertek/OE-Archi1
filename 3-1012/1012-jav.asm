@@ -97,28 +97,20 @@ Beolvas: ; beker egy karaktert, megnezi, mi volt
 
 aNovel:
   mov DI, OFFSET DARAB
-  mov AL,[DI] ; ds di altal mutatott adatteruletrol beolvas 1 byte-ot al-be
-  inc AL
-  mov [DI],AL
-  ; inc byte ptr [di] ; a fenti 3 sor helyett lehetne ezzel is novelni
-  jmp Kiiras
+  jmp Novel
 
 bNovel:
   mov DI, OFFSET bszamlalo
-  mov AL,[DI]
-  inc AL
-  mov [DI],AL
-  jmp Kiiras
+  jmp Novel
 
 cNovel:
   mov DI, OFFSET cszamlalo
-  mov AL,[DI]
-  inc AL
-  mov [DI],AL
-  jmp Kiiras
+  jmp Novel
 
 dNovel:
   mov DI, OFFSET dszamlalo
+
+Novel:
   mov AL,[DI]
   inc AL
   mov [DI],AL
