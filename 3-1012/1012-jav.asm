@@ -31,11 +31,39 @@ Kiiras:
   int 21h
 
   mov ah,9
+  mov dx,offset bszoveg1
+  int 21h
+  mov dx,offset bszamlalo
+  int 21h
+  mov dx,offset bszoveg2
+  int 21h
+
+  mov ah,2
+  mov dl,10
+  int 21h
+  mov dl,13
+  int 21h
+
+  mov ah,9
   mov dx,offset cszoveg1
   int 21h
   mov dx,offset cszamlalo
   int 21h
   mov dx,offset cszoveg2
+  int 21h
+
+  mov ah,2
+  mov dl,10
+  int 21h
+  mov dl,13
+  int 21h
+
+  mov ah,9
+  mov dx,offset dszoveg1
+  int 21h
+  mov dx,offset dszamlalo
+  int 21h
+  mov dx,offset dszoveg2
   int 21h
 
   mov ah,2
@@ -53,10 +81,18 @@ Beolvas: ; beker egy karaktert, megnezi, mi volt
   je aNovel ; ha kis 'a', akkor azt szamoljuk
   cmp al,'A'
   je aNovel
+  cmp al,'b'
+  je bNovel
+  cmp al,'B'
+  je bNovel
   cmp al,'c'
   je cNovel
   cmp al,'C'
   je cNovel
+  cmp al,'d'
+  je dNovel
+  cmp al,'D'
+  je dNovel
   jmp Beolvas ; kulonben visszater Beolvas elejere
 
 aNovel:
@@ -67,8 +103,22 @@ aNovel:
   ; inc byte ptr [di] ; a fenti 3 sor helyett lehetne ezzel is novelni
   jmp Kiiras
 
+bNovel:
+  mov DI, OFFSET bszamlalo
+  mov AL,[DI]
+  inc AL
+  mov [DI],AL
+  jmp Kiiras
+
 cNovel:
   mov DI, OFFSET cszamlalo
+  mov AL,[DI]
+  inc AL
+  mov [DI],AL
+  jmp Kiiras
+
+dNovel:
+  mov DI, OFFSET dszamlalo
   mov AL,[DI]
   inc AL
   mov [DI],AL
@@ -81,9 +131,15 @@ Program_Vege:
 SZOVEGE DB "Eddig "
 DARAB DB '0' ; ASCII, mert azt rogton ki lehet iratni, meg ugyis csak 9-ig megyunk
 SZOVEGV DB " db 'a' vagy 'A' betu lett lenyomva.$"
+bszoveg1 db "A 'b' vagy 'B' billentyu $"
+bszamlalo db "0$"
+bszoveg2 db " alkalommal volt leutve.$"
 cszoveg1 db "A 'c' vagy 'C' billentyu $"
 cszamlalo db "0$"
 cszoveg2 db " alkalommal volt leutve.$"
+dszoveg1 db "A 'd' vagy 'D' billentyu $"
+dszamlalo db "0$"
+dszoveg2 db " alkalommal volt leutve.$"
 
 Code	Ends
 
