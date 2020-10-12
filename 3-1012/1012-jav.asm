@@ -112,6 +112,8 @@ dNovel:
 
 Novel:
   mov AL,[DI]
+  cmp AL,'8'
+  jg Program_Vege
   inc AL
   mov [DI],AL
   jmp Kiiras
