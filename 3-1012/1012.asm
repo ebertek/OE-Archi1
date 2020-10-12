@@ -17,7 +17,12 @@ Start:
   mov dl, 0   ; column
   int 10h
 
-
+Beolvas: ; beker egy karaktert, ha Esc, akkor kilep
+  xor ax,ax ; ax kinullazasa
+  int 16h   ; karakter beolvasasa
+  cmp al,27 ; 27 = ESC
+  je Program_vege ; ha igaz, kilep
+  jmp Beolvas ; kulonben visszater Beolvas elejere
 
 Program_Vege:
 	mov ax, 4c00h
