@@ -21,7 +21,7 @@ Kiiras:
   int 10h
 
   mov ah,9 ; kiiras
-  mov dx,offset SZOVEGE
+  mov dx,offset SZOVEGE ; SZOVEGE es DARAB nem $-re vegzodik, ugyhogy ki fogja irni az egeszet
   int 21h
 
 Beolvas: ; beker egy karaktert, megnezi, mi volt
@@ -35,7 +35,7 @@ Beolvas: ; beker egy karaktert, megnezi, mi volt
 
 aNovel:
   ; mov DI, OFFSET DARAB ; attettuk a program elejere
-  mov AL,[DI]
+  mov AL,[DI] ; ds di altal mutatott adatteruletrol beolvas 1 byte-ot al-be
   inc AL
   mov [DI],AL
   ; inc byte ptr [di] ; a fenti 3 sor helyett lehetne ezzel is novelni
