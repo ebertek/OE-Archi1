@@ -10,6 +10,7 @@ Start:
 ; set video mode, ettol torlodik a kepernyo:
   mov ax, 03h ; ah: 00h; al: 03h => text, 80x25, 16/8 colors
   int 10h
+; jelen esetben ezt eleg egyszer lefuttatni, ugyanoda fogjuk kiirni a szoveget
 
 Kiiras:
 ; set cursor position:
