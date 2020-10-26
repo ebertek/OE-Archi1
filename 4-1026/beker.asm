@@ -45,15 +45,15 @@ Vizsg:
 	jmp Bevitel
 
 Tarol:
-	mov [di], al
-	inc di
+	mov [di], al ; bekert karaktert beirjuk az elso * helyere az ertek-ben
+	inc di ; noveljuk az indexet, a kovetkezo szam mar a kovetkezo helyre kerul
 	mov al, '$'
-	mov [di], al
+	mov [di], al ; ott lesz vege az ertek-nek, ahol eppen jarunk
 
 	mov ah, 02h
 	mov bh, 0
-	mov dh, 5
-	mov dl, 28
+	mov dh, 5 ; 5. sor
+	mov dl, 28 ; 28. oszlop
 	int 10h
 
 	mov dx, offset ertek
@@ -63,7 +63,7 @@ Tarol:
 	mov ax, offset ertek
 	add ax, 4
 	cmp ax, di
-	jnz Bevitel
+	jnz Bevitel ; 4 db szamot kerunk csak be
 
 	mov ah, 02h
 	mov bh, 0
