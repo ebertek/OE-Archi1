@@ -30,7 +30,9 @@ Vizsg:
 	cmp al, ah ; al <- bekert karakter
 	jz Tarol ; elso korben 0,
 	inc ah ; aztan 1..9
-	loop Vizsg ; beepitett ciklus, ua., mint dec cx jnz Vizsg
+	; loop Vizsg ; beepitett ciklus, ua., mint a kovetkezo ket sor:
+	dec cx
+	jnz Vizsg
 
 	mov ah, 02h
 	mov bh, 0
@@ -68,6 +70,7 @@ Tarol:
 	mov ah, 02h
 	mov bh, 0
 	mov dh, 7
+	mov dl, 7
 	int 10h
 
 	mov dx, offset uzenet
