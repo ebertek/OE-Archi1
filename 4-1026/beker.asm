@@ -8,17 +8,17 @@ Start:
 
 	mov di, offset ertek
 
-	mov ax, 03
+	mov ax, 03 ; clear screen
 	int 10h
 
 Bevitel:
-	xor ax, ax
-	int 16h
+	xor ax, ax ; ah <- 0
+	int 16h ; al <- beolvasott karakter
 
-	mov bx, ax
-	mov ax, 03
+	mov bx, ax ; bl-be elmentjuk, mert al-t masra kell most hasznalnunk
+	mov ax, 03 ; clear screen
 	int 10h
-	mov ax, bx
+	mov ax, bx ; visszatoltjuk al-be
 
 	cmp al, 27
 	jz Program_vege
@@ -27,14 +27,14 @@ Bevitel:
 	mov ah, '0'
 
 Vizsg:
-	cmp al, ah
-	jz Tarol
-	inc ah
-	loop Vizsg
+	cmp al, ah ; al <- bekert karakter
+	jz Tarol ; elso korben 0,
+	inc ah ; aztan 1..9
+	loop Vizsg ; beepitett ciklus, ua., mint dec cx jnz Vizsg
 
 	mov ah, 02h
 	mov bh, 0
-	mov dh, 10
+	mov dh, 10 ; 10. sor
 	int 10h
 
 	mov dx, offset hiba
