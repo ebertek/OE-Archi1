@@ -44,6 +44,19 @@ ciklus2:
 	cmp cl, 11
 	jl ciklus2
 
+; atfogo:
+	mov cl, 6
+ciklus3:
+	mov dl, cl
+	add dl, 4
+	mov dh, cl
+	int 10h
+	mov dl, '*'
+	int 21h
+	inc cl
+	cmp cl, 11
+	jl ciklus3
+
 Program_vege:
 	mov ax, 4c00h
 	int 21h
