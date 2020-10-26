@@ -35,6 +35,7 @@ Vizsg:
 	mov ah, 02h
 	mov bh, 0
 	mov dh, 10 ; 10. sor
+	mov dl, 10 ; 10. oszlop
 	int 10h
 
 	mov dx, offset hiba
