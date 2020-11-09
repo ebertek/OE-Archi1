@@ -10,10 +10,12 @@ Start:
 	mov dh, 100	; Y koordinata
 	push dx
 
-	mov ax, 13h	; grafikus mod, 40x25 (320x200 px), 256 szin
+	mov ax, 13h	; grafikus mod: ah = 00, al = 13; 40x25 (320x200 px), 256 szin -> 64 000 bajt, ami kisebb, mint 64 KiB (ami a lapmeret)
+	; pixel -> cim: sor * 320 + oszlop
+	; cim -> pixel: cim / 320, egeszresz a sor, maradek az oszlop
 	int 10h	; set video mode
 
-	mov ax, 0a000h	; videomemoria kezdocim
+	mov ax, 0a000h	; videomemoria kezdocim; 13h-nal a000, 03h-nal b800
 	mov es, ax	; extra szegmens (es-en kozvetlenul muvelet nem vegezheto)
 
 Rajz:
@@ -23,6 +25,9 @@ Rajz:
 	push dx	; dx mentese, mul utasitas felulirja
 	mov bx, 320
 	mul bx	; Y koordinata * 320
+	; 16 bites: mul bx => bx * ax erteke bekerul dx+ax -be
+	; 8 bites: mul bl => bl * al erteke bekerul ah+al -be
+	; imul: elojeles szorzas
 	pop dx	; dx-ben Y(dh), X(dl) koordinata
 	add al, dl
 	jnc Pixel
