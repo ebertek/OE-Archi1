@@ -100,6 +100,23 @@ cikl1:
 	mul bx
 	add ax, 100
 	mov di, ax
+; 2b: Ferden kitoltott teglalap
+
+	mov dx, 51
+	mov ah, 65
+kulsocikl2:
+	mov al, ah
+	mov cx, 101
+cikl2:
+	mov es:[di], al
+	inc di
+	inc al
+	loop cikl2
+	add di, 320
+	sub di, 101
+	dec dx
+	inc ah
+	jnz kulsocikl2
 
 Program_vege:
 	xor ax, ax
