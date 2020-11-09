@@ -15,11 +15,15 @@ Start:
 	mov ax, 100 ; sor
 	mov bx, 320
 	mul bx ; dx:ax = ax * bx
-	add ax, 160 ; ax = 100*320+160
+	add ax, 100 ; ax = 100*320+100
 	mov di, ax
 
 	mov al, 65
+	mov cx, 100
+cik1:
 	mov es:[di], al
+	inc di
+	loop cik1
 
 Program_vege:
 	xor ax, ax
