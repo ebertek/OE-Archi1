@@ -47,6 +47,21 @@ cik4:
 	sub di, 320
 	loop cik4
 
+	mov al, 65
+	mov dx, 51
+kulsocik:
+	mov al, 65
+	mov cx, 101
+cikl:
+	mov es:[di], al
+	inc di
+	inc al
+	loop cikl
+	add di, 320
+	sub di, 101
+	dec dx
+	jnz kulsocik
+
 Program_vege:
 	xor ax, ax
 	int 16h
