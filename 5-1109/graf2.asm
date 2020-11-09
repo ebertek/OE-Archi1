@@ -12,11 +12,12 @@ Start:
 	mov ax, 0a000h
 	mov es, ax
 
-	mov ax, 100 ; sor
+	mov ax, 100
 	mov bx, 320
-	mul bx ; dx:ax = ax * bx
-	add ax, 100 ; ax = 100*320+100
+	mul bx
+	add ax, 100
 	mov di, ax
+; 1a: Vizszintes es fuggoleges vonalak
 
 	mov al, 65
 	mov cx, 100
@@ -47,20 +48,58 @@ cik4:
 	sub di, 320
 	loop cik4
 
-	mov al, 65
+	xor ax, ax
+	int 16h
+	mov ax, 100
+	mov bx, 320
+	mul bx
+	add ax, 100
+	mov di, ax
+; 1b: Ferde vonalak
+	mov cx, 50
+cik5:
+	mov es:[di], al
+	inc al
+	add di, 319
+	loop cik5
+
+	mov cx, 50
+cik6:
+	mov es:[di], al
+	inc al
+	add di, 321
+	loop cik6
+
+	xor ax, ax
+	int 16h
+	mov ax, 100
+	mov bx, 320
+	mul bx
+	add ax, 100
+	mov di, ax
+; 2a: Fuggolegesen kitoltott teglalap
+
 	mov dx, 51
-kulsocik:
+kulsocikl1:
 	mov al, 65
 	mov cx, 101
-cikl:
+cikl1:
 	mov es:[di], al
 	inc di
 	inc al
-	loop cikl
+	loop cikl1
 	add di, 320
 	sub di, 101
 	dec dx
-	jnz kulsocik
+	jnz kulsocikl1
+
+	xor ax, ax
+	int 16h
+	mov ax, 100
+	mov bx, 320
+	mul bx
+	add ax, 100
+	mov di, ax
 
 Program_vege:
 	xor ax, ax
