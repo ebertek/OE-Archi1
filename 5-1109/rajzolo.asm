@@ -6,39 +6,39 @@ Start:
 	mov	ax, Code
 	mov	ds, ax
 
-	mov dl, 100
-	mov dh, 100
+	mov dl, 100	; X koordinata
+	mov dh, 100	; Y koordinata
 	push dx
 
-	mov ax, 13h
-	int 10h
+	mov ax, 13h	; grafikus mod, 40x25 (320x200 px), 256 szin
+	int 10h	; set video mode
 
-	mov ax, 0a000h
-	mov es, ax
+	mov ax, 0a000h	; videomemoria kezdocim
+	mov es, ax	; extra szegmens (es-en kozvetlenul muvelet nem vegezheto)
 
 Rajz:
-	pop dx
+	pop dx	; dx-ben Y(dh), X(dl) koordinata
 	xor ah, ah
-	mov al, dh
-	push dx
+	mov al, dh	; ax-ben Y koordinata
+	push dx	; dx mentese, mul utasitas felulirja
 	mov bx, 320
-	mul bx
-	pop dx
+	mul bx	; Y koordinata * 320
+	pop dx	; dx-ben Y(dh), X(dl) koordinata
 	add al, dl
 	jnc Pixel
-	inc ah
+	inc ah	; van atvitel
 
 Pixel:
 	push dx
 	mov di, ax
-	mov al, 128
-	mov es:[di], al
+	mov al, 128	; pixel szine
+	mov es:[di], al	; videomemoriaban beallitja a megfelelo pixel szinet
 
 Var:
 	xor ah, ah
 	int 16h
 
-	cmp al, 27
+	cmp al, 27	; ESC
 	jz Program_vege
 
 	cmp ah, 75
@@ -57,8 +57,8 @@ Var:
 
 Balra:
 	pop dx
-	dec dl
-	cmp dl, 1
+	dec dl	; szamolas
+	cmp dl, 1	; hatarellenorzes
 	jnc Tarol
 	inc dl
 	jmp Tarol
@@ -92,8 +92,8 @@ Tarol:
 	jmp Rajz
 
 Program_vege:
-	mov ax, 03h
-	int 10h
+	mov ax, 03h	; szoveges mod, 80x25, 16 szin
+	int 10h	; set video mode
 
 	pop dx
 
