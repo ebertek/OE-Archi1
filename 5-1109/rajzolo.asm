@@ -8,6 +8,7 @@ Start:
 
 	mov dl, 100	; X koordinata
 	mov dh, 100	; Y koordinata
+	mov cl, 2 ; szin
 	push dx
 
 	mov ax, 13h	; grafikus mod: ah = 00, al = 13; 40x25 (320x200 px), 256 szin -> 64 000 bajt, ami kisebb, mint 64 KiB (ami a lapmeret)
@@ -36,8 +37,9 @@ Rajz:
 Pixel:
 	push dx
 	mov di, ax
-	mov al, 128	; pixel szine
+	mov al, cl	; pixel szine
 	mov es:[di], al	; videomemoriaban beallitja a megfelelo pixel szinet
+	inc cl ; szin valtoztatasa
 
 Var:
 	xor ah, ah
