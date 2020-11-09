@@ -25,6 +25,12 @@ cik1:
 	inc di
 	loop cik1
 
+	mov cx, 50
+cik2:
+	mov es:[di], al
+	add di, 320
+	loop cik2
+
 Program_vege:
 	xor ax, ax
 	int 16h
