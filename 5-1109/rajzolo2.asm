@@ -31,11 +31,11 @@ Rajz:
 
 Pixel:
 ; Ne huzzon csikot: visszaszinezzuk az elozo helyen levo pixelt feketere
-	pop bx
+	pop bx	; elozo koordinata betoltese
 	mov di, bx	; elozo koordinatara ugras
 	mov bl, 0	; fekete
 	mov es:[di], bl	; visszaszinezzuk
-	push ax	; uj koordinata
+	push ax	; uj koordinata mentese
 
 	push dx
 	mov di, ax
