@@ -114,8 +114,8 @@ cikl2:
 	loop cikl2
 	add di, 320
 	sub di, 101
-	dec dx
 	inc ah
+	dec dx
 	jnz kulsocikl2
 
 Program_vege:
