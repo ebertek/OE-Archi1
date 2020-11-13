@@ -1,0 +1,5 @@
+# MASM junk
+*.obj
+*.lst
+*.crf
+*.map
