@@ -118,6 +118,29 @@ cikl2:
 	dec dx
 	jnz kulsocikl2
 
+	xor ax, ax
+	int 16h
+	mov ax, 100
+	mov bx, 320
+	mul bx
+	add ax, 100
+	mov di, ax
+; 2c: Vizszintesen kitoltott teglalap
+
+	mov dx, 51
+	mov al, 65
+kulsocikl3:
+	mov cx, 101
+cikl3:
+	mov es:[di], al
+	inc di
+	loop cikl3
+	inc al
+	add di, 320
+	sub di, 101
+	dec dx
+	jnz kulsocikl3
+
 Program_vege:
 	xor ax, ax
 	int 16h
