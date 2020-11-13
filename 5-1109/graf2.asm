@@ -23,15 +23,15 @@ Start:
 	mov cx, 100
 cik1:
 	mov es:[di], al
-	inc al ; szinek :)
-	inc di ; dec: masik irany
+	inc al	; szinek :)
+	inc di	; dec: masik irany
 	loop cik1
 
 	mov cx, 50
 cik2:
 	mov es:[di], al
 	inc al
-	add di, 320 ; sub: masik irany
+	add di, 320	; sub: masik irany
 	loop cik2
 
 	mov cx, 100
