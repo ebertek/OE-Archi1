@@ -141,6 +141,43 @@ cikl3:
 	dec dx
 	jnz kulsocikl3
 
+	xor ax, ax
+	int 16h
+	mov ax, 0
+	mov bx, 320
+	mul bx
+	add ax, 100
+	mov di, ax
+; 3a: Rombusz
+; Teteje:
+	xor bx, bx	; pontok kozotti tavolsag
+	mov ah, 65
+	mov cx, 50
+cikl4:
+	sub di, bx	; eloszor 100 marad (line 149)
+	mov es:[di],ah
+	add di, bx	; vissza kozepre
+	add di, bx	; masik oldal
+	mov es:[di],ah
+	sub di, bx	; vissza kozepre
+	inc bx	; ponttavolsag novelese
+	add di, 320	; kovi sor
+	loop cikl4
+
+; Alja:
+	mov bx, 50	; amennyiszer az elobb novelve lett a ciklusvaltozo (line 155)
+	mov cx, 50
+cikl5:
+	sub di, bx
+	mov es:[di],ah
+	add di, bx
+	add di, bx
+	mov es:[di],ah
+	sub di, bx
+	dec bx	; itt most forditva
+	add di, 320
+	loop cikl5
+
 Program_vege:
 	xor ax, ax
 	int 16h
