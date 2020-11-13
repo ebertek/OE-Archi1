@@ -178,6 +178,36 @@ cikl5:
 	add di, 320
 	loop cikl5
 
+	xor ax, ax
+	int 16h
+	mov ax, 50
+	mov bx, 320
+	mul bx
+	add ax, 100
+	mov di, ax
+; 3b: Egyenlo szaru derekszogu haromszog
+; Ugyanaz, mint az elozo, de csak az egyik fele kell, aztan az aljara egy egyenes szakasz
+	xor bx, bx	; pontok kozotti tavolsag
+	mov ah, 65
+	mov cx, 50
+cikl6:
+	sub di, bx
+	mov es:[di], ah
+	add di, bx
+	add di, bx
+	mov es:[di], ah
+	sub di, bx
+	inc bx
+	add di, 320
+	loop cikl6
+
+	mov cx, 100
+	sub di, bx
+cikl7:
+	mov es:[di], ah
+	inc di
+	loop cikl7
+
 Program_vege:
 	xor ax, ax
 	int 16h
