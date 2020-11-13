@@ -155,10 +155,10 @@ cikl3:
 	mov cx, 50
 cikl4:
 	sub di, bx	; eloszor 100 marad (line 149)
-	mov es:[di],ah
+	mov es:[di], ah
 	add di, bx	; vissza kozepre
 	add di, bx	; masik oldal
-	mov es:[di],ah
+	mov es:[di], ah
 	sub di, bx	; vissza kozepre
 	inc bx	; ponttavolsag novelese
 	add di, 320	; kovi sor
@@ -169,10 +169,10 @@ cikl4:
 	mov cx, 50
 cikl5:
 	sub di, bx
-	mov es:[di],ah
+	mov es:[di], ah
 	add di, bx
 	add di, bx
-	mov es:[di],ah
+	mov es:[di], ah
 	sub di, bx
 	dec bx	; itt most forditva
 	add di, 320
