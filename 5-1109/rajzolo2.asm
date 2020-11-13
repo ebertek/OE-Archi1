@@ -30,6 +30,13 @@ Rajz:
 	inc ah
 
 Pixel:
+; Ne huzzon csikot: visszaszinezzuk az elozo helyen levo pixelt feketere
+	pop bx
+	mov di, bx	; elozo koordinatara ugras
+	mov bl, 0	; fekete
+	mov es:[di], bl	; visszaszinezzuk
+	push ax	; uj koordinata
+
 	push dx
 	mov di, ax
 	mov al, cl
