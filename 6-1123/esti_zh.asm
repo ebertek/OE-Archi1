@@ -1,7 +1,7 @@
 ;==========================================================================
 ;Név: Ebert David
 ;Neptun kód: W81GPX
-;Dátum: 2020-1123
+;Dátum: 2020-11-23
 ;
 ;==========================================================================
 Code	Segment
@@ -43,36 +43,32 @@ Start:
 	mov dl, 10 ; oszlop
 	int 10h ; 10,10 koordinatara megyunk
 
-; vizszintesen 8 db x
-	mov dl, 'x'
-	mov cx, 8
+	mov cl, 10 ; fuggolegesen
 cyc1:
-	int 21h
-	loop cyc1
-
-	mov cx, 7
-cyc2:
 	mov dl, 10
 	mov dh, cl
 	int 10h
 	mov dl, 'x'
 	int 21h
 	inc cl
-	cmp cl, 11
-	jl cyc2
+	cmp cl, 17 ; 8 db
+	jle cyc1
 
-; atfogo:
-	mov cl, 6
-cyk3:
+	mov cx, 7 ; vizszintesen csak 7 x kiiarasa siman (8.-at az elozo cikl.)
+cyc2:
+	int 21h
+	loop cyc2
+
+	mov cl, 11 ; atfogo
+cyc3:
 	mov dl, cl
-	add dl, 4
 	mov dh, cl
 	int 10h
 	mov dl, 'x'
 	int 21h
 	inc cl
-	cmp cl, 11
-	jl cyk3
+	cmp cl, 16
+	jle cyc3
 
 
 ;Eddig
@@ -104,6 +100,22 @@ cyk3:
 ;**************************************************************************
 ;Ide írja a megfelelõ programrészt!
 
+; SI-t at kell valtani 2-es szamrendszerbe: 0 vagy 1
+	mov cx, 16 ; 16 bit, addig megy a ciklus, annyi 0 vagy 1 lesz kiirva
+cyc4:
+	xor dl, dl
+	rcl si, 1 ; rotate left, ettol C flagben 1 vagy 0 lesz
+	jnc cyc4_0 ; nincs carry
+	jc cyc4_1 ; van carry
+cyc4_1:
+	add dl, '1' ; karakterkent
+	int 21h ; kiiras
+	jmp cyc4_2
+cyc4_0:
+	add dl, '0'
+	int 21h
+cyc4_2:
+	loop cyc4
 
 ;Eddig
 ;**************************************************************************
@@ -139,6 +151,22 @@ bevitel1:
 ;**************************************************************************
 ;Ide írja a megfelelõ programrészt!
 
+; szam, ha 0 es 9 kozott van
+	cmp al, '0'
+	jl egyeb
+	cmp al, '9'
+	jg egyeb
+	; ha nem ugrottunk tovabb az egyebre, akkor szam
+	mov	dx, offset uzenetszam
+	mov	ah, 9
+	int	21h
+	jmp bevitel1
+
+egyeb:
+	mov	dx, offset uzenetnemszam
+	mov	ah, 9
+	int 21h
+	jmp bevitel1
 
 ;Eddig
 ;**************************************************************************
@@ -193,8 +221,25 @@ Feladat3_Vege:
 
 ; --------------------------------------------------------------------------
 ; Ide írja a megfelelõ programrészt!
+	mov si, 0
+	mov cx, 0
+szamol:
+;	cmp mondat[si], '$'
+;	je vege
+;	cmp mondat[si], ' '
+;	jne nemszokoz ; valamiert ez phase error hibat dob
 
+szokoz:
+;	inc cx ; ha szokoz
 
+nemszokoz:
+;	inc si
+;	jmp szamol
+vege:
+;	mov dl, cl
+;	add dl, '0' ; vissza a szamot karakterre
+;	mov ah, 2 ; kiiras
+;	int 21h
 
 ; Eddig
 ; --------------------------------------------------------------------------
@@ -250,7 +295,20 @@ Feladat3_Vege:
 
 ;**************************************************************************
 ;Ide írja a megfelelõ programrészt!
-
+	xor ax, ax ; urites
+	mov si, offset muvelet1
+	mov al, [si]
+	sub al, '0' ; atalakitas szamma
+	inc si ; itt van a csillag
+	inc si ; itt a masik szam
+	mov bl, [si]
+	sub bl, '0'
+	mul bl ; maga a szorzas
+	mov cx, ax
+	mov dx, ax
+	add dx, '0' ; igy jo lenne, ha <= 9 lenne ..
+	mov ah, 2 ; kiiras
+	int 21h
 
 ;Eddig
 ;**************************************************************************
